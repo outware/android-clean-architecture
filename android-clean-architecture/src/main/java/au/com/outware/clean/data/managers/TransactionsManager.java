@@ -24,6 +24,7 @@ public class TransactionsManager implements TransactionRepository, RequestTransa
     public void getTransactionList(GetTransactionListCallback callback) {
         callbacks.add(callback);
         if (!mRequestInProgress) {
+            mRequestInProgress = true;
             mApiClient.getTransactionList(this);
         }
     }
@@ -35,6 +36,7 @@ public class TransactionsManager implements TransactionRepository, RequestTransa
 
     @Override
     public void onSuccess(List<Transaction> transactionList) {
+        mRequestInProgress = false;
         for (GetTransactionListCallback callback : callbacks) {
             callback.onGetTransactionListSuccess(transactionList);
         }
@@ -42,6 +44,7 @@ public class TransactionsManager implements TransactionRepository, RequestTransa
 
     @Override
     public void onError() {
+        mRequestInProgress = false;
         for (GetTransactionListCallback callback : callbacks) {
             callback.onGetTransactionListError(DomainError.API_FAILURE);
         }

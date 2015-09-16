@@ -48,7 +48,6 @@ public class ViewMyTransactionsUseCase implements UseCase, GetTransactionListCal
         }
         if (freeTransactionCount >= 10) {
             mAccountRepository.grantAchievement(Achievement.TEN_FREE_TRANSACTIONS);
-            mCallback.congratulateOnAchievement(Achievement.TEN_FREE_TRANSACTIONS);
         }
     }
 
@@ -64,8 +63,6 @@ public class ViewMyTransactionsUseCase implements UseCase, GetTransactionListCal
     public interface Callback {
 
         void presentTransactions(List<Transaction> transactionList);
-
-        void congratulateOnAchievement(Achievement achievement);
 
         void promptUserToSignIn();
 
